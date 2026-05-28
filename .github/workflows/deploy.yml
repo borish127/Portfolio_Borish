@@ -26,6 +26,8 @@ jobs:
 
       - name: Install, build, and upload Astro assets
         uses: withastro/action@v3
+        with:
+          node-version: 22
 
       - name: Deploy to GitHub Pages
         id: deployment
