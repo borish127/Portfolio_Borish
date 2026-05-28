@@ -1,0 +1,96 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.tsx";
+import HeroSection from "../components/HeroSection.tsx";
+import EducationSection from "../components/EducationSection.tsx";
+import InternshipShowcase from "../components/InternshipShowcase.tsx";
+import CurrentWork from "../components/CurrentWork.tsx";
+import UniversityProject from "../components/UniversityProject.tsx";
+import PersonalProjects from "../components/PersonalProjects.tsx";
+import BackToTop from "../components/BackToTop.tsx";
+
+// Metadata definitions
+const title = "Alex River | Creative Frontend Engineer Portfolio";
+const description = "Crafting high-performance, kinematic web experiences utilizing glassmorphic designs, GPU offloaded layout animations, and strict modern design principles.";
+const siteUrl = "https://borish127.github.io/Portfolio_Borish"; // Fallback URL for crawler link preview resolution
+const ogImage = `${siteUrl}/og-image.png`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Primary SEO Meta Tags */}
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Alex River" />
+    <meta name="theme-color" content="#f8fafc" />
+
+    {/* Open Graph / Facebook (WhatsApp link previews) */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:site_name" content="Alex River Portfolio" />
+
+    {/* Twitter Metadata */}
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={siteUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    {/* Preload critical font profiles for visual stability */}
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+  </head>
+  
+  <body class="bg-canvas-light text-slate-800 min-h-screen relative font-sans antialiased">
+    
+    {/* Floating background animation blobs */}
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div class="bg-blob bg-blob-green top-[10%] -left-[10%]"></div>
+      <div class="bg-blob bg-blob-blue top-[50%] -right-[10%]"></div>
+      <div class="bg-blob bg-blob-green bottom-[-10%] left-[20%]"></div>
+    </div>
+
+    {/* Navigation */}
+    <Navbar client:load />
+
+    {/* Core content sections */}
+    <main class="relative z-10 w-full flex flex-col items-center">
+      <HeroSection client:load />
+      <EducationSection client:load />
+      
+      {/* Experience block contains Internship Showcase & Current Work */}
+      <div class="w-full">
+        <InternshipShowcase client:load />
+        <CurrentWork client:load />
+      </div>
+
+      <UniversityProject client:load />
+      <PersonalProjects client:load />
+    </main>
+
+    {/* Global back to top utility */}
+    <BackToTop client:load />
+
+  </body>
+</html>

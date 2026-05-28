@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Lora', serif;
+
+  --color-canvas-light: #f8fafc; /* Crisp, clinical slate-white */
+  --color-accent-green: #059669; /* Precision emerald green */
+  --color-accent-blue: #1d4ed8;  /* Medical instrument blue */
+  --color-glass-bg: rgba(255, 255, 255, 0.45);
+  --color-glass-border: rgba(9, 9, 11, 0.05);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-canvas-light);
+    color: #1f2937; /* Clean charcoal gray for high legibility */
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Sophisticated serif for clinical headings */
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    color: #0f172a; /* Slate 900 for high-contrast headers */
+  }
+
+  /* Clean sans-serif for data points and subtitles */
+  .font-sans-data {
+    font-family: var(--font-sans);
+  }
+
+  /* Custom Selection styling matching soft green theme */
+  ::selection {
+    background-color: rgba(5, 150, 105, 0.08);
+    color: #047857;
+  }
+
+  /* Custom scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f8fafc;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(9, 9, 11, 0.08);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(9, 9, 11, 0.16);
+  }
+}
+
+/* Glassmorphism Styles (Sober Light Mode) */
+.glass-card {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: 0 10px 30px -10px rgba(9, 9, 11, 0.05), 0 1px 3px 0 rgba(9, 9, 11, 0.01);
+  border-radius: 1.25rem;
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(9, 9, 11, 0.03);
+  box-shadow: 0 10px 30px -10px rgba(9, 9, 11, 0.08);
+  border-radius: 9999px;
+}
+
+/* Minimalism Buttons & Pills */
+.glass-pill {
+  background: rgba(9, 9, 11, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(9, 9, 11, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-pill:hover {
+  background: rgba(9, 9, 11, 0.05);
+  border-color: rgba(9, 9, 11, 0.12);
+  box-shadow: none;
+}
+
+/* Hardware Acceleration */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Soft Biological Ambient Depth Blobs for Light Mode */
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 0;
+  pointer-events: none;
+  width: 55vw;
+  height: 55vw;
+  max-width: 750px;
+  max-height: 750px;
+  will-change: transform, opacity;
+}
+
+.bg-blob-green {
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.15) 0%, rgba(5, 150, 105, 0.05) 45%, rgba(5, 150, 105, 0) 70%);
+  animation: float-blob-green 28s infinite alternate ease-in-out;
+}
+
+.bg-blob-blue {
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.08) 0%, rgba(29, 78, 216, 0.02) 45%, rgba(29, 78, 216, 0) 70%);
+  animation: float-blob-blue 32s infinite alternate ease-in-out;
+}
+
+@keyframes float-blob-green {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(12vw, 15vh) scale(1.25);
+    opacity: 1.1;
+  }
+  100% {
+    transform: translate(-6vw, 6vh) scale(0.9);
+    opacity: 0.7;
+  }
+}
+
+@keyframes float-blob-blue {
+  0% {
+    transform: translate(0, 0) scale(1.05);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-10vw, -8vh) scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(6vw, 8vh) scale(1.1);
+    opacity: 0.75;
+  }
+}
+
+/* Instrument Accent Transitions */
+.accent-border-green-hover:hover {
+  border-color: rgba(5, 150, 105, 0.2) !important;
+}
+
+.accent-border-blue-hover:hover {
+  border-color: rgba(29, 78, 216, 0.2) !important;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  .bg-blob {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
