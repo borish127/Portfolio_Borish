@@ -4,6 +4,7 @@ import { heroData } from "../config/portfolio";
 import { gsap } from "gsap";
 
 export default function HeroSection() {
+  const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
   const [copied, setCopied] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -131,7 +132,7 @@ export default function HeroSection() {
             {/* Glowing avatar image */}
             <div className="w-full h-full rounded-xl bg-slate-100 border border-slate-200/30 flex flex-col items-center justify-center relative overflow-hidden group">
               <img
-                src="../public/avatar.png"
+                src={`${base}avatar.webp`}
                 alt={heroData.name}
                 className="absolute inset-0 w-full h-full object-cover scale-130 -translate-y-15 group-hover:scale-140 transition-all duration-700 ease-out"
               />

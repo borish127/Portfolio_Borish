@@ -93,6 +93,8 @@ export const educationData: EducationItem[] = [
   }
 ];
 
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+
 export const internshipStages: InternshipStage[] = [
   {
     stage: 1,
@@ -100,7 +102,7 @@ export const internshipStages: InternshipStage[] = [
     subtitle: "Maintenance Intern • Sanatorio Adventista del Plata",
     narrative: "Redesign the entire electronical system of the hospital guillotine. Changed the old analogic system for a digital one using arduino board and programmed in C.",
     tools: ["Arduino - IDE", "FreeCAD", "KiCad", "3D printing", "PCB Design", "Soldering"],
-    images: ["../public/project1_1.png", "../public/project1_2.png"],
+    images: [`${base}project1_1.webp`, `${base}project1_2.webp`],
     imageLayout: "rows"
   },
   {
@@ -109,7 +111,7 @@ export const internshipStages: InternshipStage[] = [
     subtitle: "Electronics and Firmware Intern • Sanatorio Adventista del Plata",
     narrative: "Developed the activation / deactivation logic for the MRI cooler pump. To prevent pump aging and unnecessary energy consumption, I designed a logic that takes the current used by the MRI magnet to detect when a study is running and based on that turns on and off the pump. Also during nights or long periods without using the MRI, the pump has cycles to turn on/off.",
     tools: ["Arduino - IDE", "FreeCAD", "KiCad", "3D printing", "PCB Design", "Soldering"],
-    images: ["../public/project2_1.png", "../public/project2_2.png"]
+    images: [`${base}project2_1.webp`, `${base}project2_2.webp`]
   },
   {
     stage: 3,
@@ -117,7 +119,7 @@ export const internshipStages: InternshipStage[] = [
     subtitle: "Electronics and Firmware Intern • Sanatorio Adventista del Plata",
     narrative: "I made a PWM modulator to control the speed of an air pump for a heated blanket used in surgeries.",
     tools: ["KiCad", "PCB Design", "Soldering"],
-    images: ["../public/project3_1.png", "../public/project3_2.png"]
+    images: [`${base}project3_1.webp`, `${base}project3_2.webp`]
   },
   {
     stage: 4,
@@ -125,7 +127,7 @@ export const internshipStages: InternshipStage[] = [
     subtitle: "Additional Work & Projects",
     narrative: "Various additional bioengineering projects, instrumentation controllers, and circuit prototyping designed to optimize clinical operations and hardware interfaces.",
     tools: ["C/C++", "LabVIEW", "Electronics Calibration"],
-    images: ["../public/project4_1.png", "../public/project4_2.png"]
+    images: [`${base}project4_1.webp`, `${base}project4_2.webp`]
   }
 ];
 

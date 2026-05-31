@@ -35,6 +35,7 @@ export default function InternshipShowcase() {
     tl.to(".stage-1-item", {
       opacity: 0,
       y: -80,
+      pointerEvents: "none",
       duration: 1,
       ease: "power2.inOut"
     })
@@ -50,8 +51,8 @@ export default function InternshipShowcase() {
       ease: "power2.inOut"
     }, "-=1")
     .fromTo(".stage-2-item", 
-      { opacity: 0, y: 80 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.inOut" },
+      { opacity: 0, y: 80, pointerEvents: "none" },
+      { opacity: 1, y: 0, pointerEvents: "auto", duration: 1, ease: "power2.inOut" },
       "-=0.7" // overlap slightly
     )
     
@@ -59,6 +60,7 @@ export default function InternshipShowcase() {
     .to(".stage-2-item", {
       opacity: 0,
       y: -80,
+      pointerEvents: "none",
       duration: 1,
       ease: "power2.inOut"
     })
@@ -80,8 +82,8 @@ export default function InternshipShowcase() {
       ease: "power2.inOut"
     }, "-=1")
     .fromTo(".stage-3-item", 
-      { opacity: 0, y: 80 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.inOut" },
+      { opacity: 0, y: 80, pointerEvents: "none" },
+      { opacity: 1, y: 0, pointerEvents: "auto", duration: 1, ease: "power2.inOut" },
       "-=0.7"
     )
 
@@ -89,6 +91,7 @@ export default function InternshipShowcase() {
     .to(".stage-3-item", {
       opacity: 0,
       y: -80,
+      pointerEvents: "none",
       duration: 1,
       ease: "power2.inOut"
     })
@@ -110,8 +113,8 @@ export default function InternshipShowcase() {
       ease: "power2.inOut"
     }, "-=1")
     .fromTo(".stage-4-item", 
-      { opacity: 0, y: 80 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.inOut" },
+      { opacity: 0, y: 80, pointerEvents: "none" },
+      { opacity: 1, y: 0, pointerEvents: "auto", duration: 1, ease: "power2.inOut" },
       "-=0.7"
     );
 

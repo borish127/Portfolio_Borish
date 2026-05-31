@@ -14,14 +14,15 @@ const title = "Boris Hage | Advanced Biomedical Engineering Student";
 const description =
   "Advanced Biomedical Engineering student with a strong focus on the latest trends and technologies in the field. I like very much electronics and robotics. I have experience diagnosing and fixing electronic biomedical devices. I am very creative developing solutions for complex problems using tools from mechanical, electronics, programming and modeling.";
 const siteUrl = "https://borish127.github.io/Portfolio_Borish"; // Fallback URL for crawler link preview resolution
-const ogImage = `${siteUrl}/og-image.png`;
+const ogImage = `${siteUrl}/og-image.webp`;
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" href={`${base}favicon.ico`} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
