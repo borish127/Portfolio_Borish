@@ -27,7 +27,9 @@ export interface InternshipStage {
   tools: string[];
   metricLabel?: string;
   metricValue?: string;
-  placeholderType: "microfluidics" | "spectrometry" | "telemetry";
+  placeholderType?: string;
+  images?: string[];
+  imageLayout?: "cols" | "rows";
 }
 
 export interface CurrentWorkData {
@@ -56,38 +58,37 @@ export interface PersonalProjectItem {
 }
 
 export const heroData: HeroData = {
-  name: "Evelyn Vance",
-  role: "Bioengineering Interface Specialist",
-  tagline: "Engineering Precision Diagnostics & Visual Computing Interfaces.",
-  email: "evelyn.vance.dev@gmail.com",
-  bio: "Specializing in the intersection of biomedical engineering, fluid dynamics modeling, and high-fidelity interface design. I craft highly performant interactive systems that translate real-time sensor streams and laboratory diagnostics into sophisticated, hardware-accelerated scientific tools.",
+  name: "Boris Hage",
+  role: "Biomedical Engineer Advanced Student",
+  tagline: "Advanced Bioengineering Student",
+  email: "borishage7@gmail.com",
+  bio: "Advanced Biomedical Engineering student with a strong focus on the latest trends and technologies in the field. I like very much electronics and robotics. I have experience diagnosing and fixing electronic biomedical devices. I am very creative developing solutions for complex problems using tools from mechanical, electronics, programming and modeling. I know programming in C for firware in embebbed systems, C++ for Object Oriented Programming, Python for data analysis and scientific computing, and some web development basics. In my career I choose Computing Networks and Artificial Intelligence as specializations. Currently I am working on my final graduation project that consists in Pulse wave and Heart rate monitoring during a MRI study using a pneumatical method.",
   socials: {
-    whatsapp: "https://wa.me/1234567890",
-    gmail: "mailto:evelyn.vance.dev@gmail.com",
-    instagram: "https://instagram.com/evelynvance.dev",
-    youtube: "https://youtube.com/@evelynvance"
+    whatsapp: "https://wa.me/+5492266440214",
+    gmail: "borishage7@gmail.com",
+    instagram: "https://www.instagram.com/borish127?igsh=eWNmbnJ0c3pvNzQ5",
+    youtube: "https://youtube.com/@borish127"
   }
 };
 
 export const educationData: EducationItem[] = [
   {
-    institution: "Institute of Biomedical Technologies",
-    degree: "M.S. in Bioengineering & Computational Biomechanics",
-    period: "2024 — 2026",
+    institution: "Instituto Adventista Balcarce",
+    degree: "Hight School",
+    period: "2013 — 2018",
     highlights: [
-      "Specialized in microfluidics simulation, bio-signal processing, and optical diagnostics.",
-      "Published research on high-frequency bio-signal rendering offloading paths.",
-      "Developed interactive 3D visualizations for orthopedic biomechanical stresses."
+      "Social science orientation.",
+      "Five years in Math Olympiad.",
     ]
   },
   {
-    institution: "Apex University of Science",
-    degree: "B.S. in Biomedical Engineering (Summa Cum Laude)",
-    period: "2020 — 2024",
+    institution: "Facultad de Ingeniería, Universidad Nacional de Entre Ríos",
+    degree: "Bioengineer",
+    period: "2019 — 2026",
     highlights: [
-      "Concentrations in Biosensors, Mathematical Physiology, and Medical Computing.",
-      "Graduated in the top 1% of the engineering department (GPA: 3.96/4.0).",
-      "Designed a low-cost spectrophotometer interface as an undergraduate thesis."
+      "Specialized in Electronics and Robotics, Computing Networks and Artificial Intelligence",
+      "Internship at Sanatorio Adventista del Plata.",
+      "Working in the final graduation project: Pulse wave and Heart rate monitoring during a MRI study using a pneumatical method."
     ]
   }
 ];
@@ -95,73 +96,81 @@ export const educationData: EducationItem[] = [
 export const internshipStages: InternshipStage[] = [
   {
     stage: 1,
-    title: "Microfluidic Modeling",
-    subtitle: "R&D Internship • Helix Diagnostics Labs",
-    narrative: "Assigned to the microfluidic chip design team. I modeled laminar flow boundaries and micro-channel geometries using COMSOL and built an interactive dashboard to overlay simulation grids with real-time test sensor feeds.",
-    tools: ["COMSOL Multiphysics", "MATLAB", "CAD Modeling", "Python (NumPy)"],
-    placeholderType: "microfluidics"
+    title: "Update electronical system of the hospital guillotine",
+    subtitle: "Maintenance Intern • Sanatorio Adventista del Plata",
+    narrative: "Redesign the entire electronical system of the hospital guillotine. Changed the old analogic system for a digital one using arduino board and programmed in C.",
+    tools: ["Arduino - IDE", "FreeCAD", "KiCad", "3D printing", "PCB Design", "Soldering"],
+    images: ["../public/project1_1.png", "../public/project1_2.png"],
+    imageLayout: "rows"
   },
   {
     stage: 2,
-    title: "Optical Spectrometry",
-    subtitle: "Developing Diagnostic Diagnostics Telemetry",
-    narrative: "Designed a real-time visualization client for high-frequency optical spectrometer telemetry. By transitioning rendering pipelines to GPU-accelerated canvas layers, we achieved steady 60Hz rendering for multi-spectral analysis charts.",
-    tools: ["WebGL", "TypeScript", "Spectrometer Sensor APIs", "GSAP"],
-    placeholderType: "spectrometry"
+    title: "Activation / Deactivation logic for MRI cooler pump",
+    subtitle: "Electronics and Firmware Intern • Sanatorio Adventista del Plata",
+    narrative: "Developed the activation / deactivation logic for the MRI cooler pump. To prevent pump aging and unnecessary energy consumption, I designed a logic that takes the current used by the MRI magnet to detect when a study is running and based on that turns on and off the pump. Also during nights or long periods without using the MRI, the pump has cycles to turn on/off.",
+    tools: ["Arduino - IDE", "FreeCAD", "KiCad", "3D printing", "PCB Design", "Soldering"],
+    images: ["../public/project2_1.png", "../public/project2_2.png"]
   },
   {
     stage: 3,
-    title: "Clinical System Delivery",
-    subtitle: "Optimization & Instrument Calibration Results",
-    narrative: "Calibrated optical sensors and optimized rendering libraries on embeddable medical tablets. We successfully eliminated rendering stutters on patient-monitoring viewports, reducing data rendering lag to under 2ms.",
-    tools: ["Web Vitals API", "Embedded Linux", "Lighthouse CI", "Chrome Profiler"],
-    metricLabel: "Sensory Latency Improvement",
-    metricValue: "99.8% Sync",
-    placeholderType: "telemetry"
+    title: "Implementation of PWM motor speed modulation",
+    subtitle: "Electronics and Firmware Intern • Sanatorio Adventista del Plata",
+    narrative: "I made a PWM modulator to control the speed of an air pump for a heated blanket used in surgeries.",
+    tools: ["KiCad", "PCB Design", "Soldering"],
+    images: ["../public/project3_1.png", "../public/project3_2.png"]
+  },
+  {
+    stage: 4,
+    title: "Miscellaneous Bioengineering & Circuits",
+    subtitle: "Additional Work & Projects",
+    narrative: "Various additional bioengineering projects, instrumentation controllers, and circuit prototyping designed to optimize clinical operations and hardware interfaces.",
+    tools: ["C/C++", "LabVIEW", "Electronics Calibration"],
+    images: ["../public/project4_1.png", "../public/project4_2.png"]
   }
 ];
 
 export const currentWorkData: CurrentWorkData = {
-  company: "Vortex Biotech",
-  role: "Lead Instrumentation Interface Engineer",
-  period: "Sept 2025 — Present",
-  description: "Driving interface strategy and layout mechanics for automated bioreactor monitoring systems. Designing low-latency data feeds mapped directly to high-frequency telemetry dashboards, ensuring consistent rendering performance for critical clinical trials.",
+  company: "Universidad Adventista del Plata",
+  role: "Maintenance of Biologic Microscopes at Medical School",
+  period: "February 2026 — Present",
+  description: "Maintenance of optic and electronic systems of biologic microscopes used in the Medical School at Universidad Adventista del Plata.",
   bullets: [
-    "Orchestrate component structure using Astro server islands and React client hydration.",
-    "Implement WebAssembly-based analytical widgets to optimize rendering paths for real-time bioreactor charts.",
-    "Pioneered a unified micro-interaction design system across three separate application ecosystems."
+    "Diagnose and fixing electronic problems in the microscopes",
+    "Fixing optic problems in the microscopes",
+    "Updating electronic systems of the microscopes from light bulbs to LED lighting",
+    "Development in progress: A new inventory system for the faculty."
   ],
-  placeholderType: "bioreactor"
+  placeholderType: "Maintenance"
 };
 
 export const universityProject: UniversityProjectData = {
-  title: "High-Frequency Physiological Waveform Plotting & Compositor Offloading",
-  subtitle: "Graduate Master's Thesis & Capstone Project",
-  abstract: "An investigation into real-time rendering of high-frequency bio-signals (ECG, EEG, EMG) on web-based diagnostic viewports. This research proposes a framework for offloading scroll-linked calculations directly to the GPU compositor thread using CSS Scroll-driven animations, ensuring zero main-thread blockage during concurrent heavy database queries.",
+  title: "Pulse wave and Heart rate monitoring during a MRI study using a pneumatical method",
+  subtitle: "Final Graduation Project",
+  abstract: "Design of an experimental system for monitoring pulse wave and heart rate during a MRI study using a pneumatical method.",
   paperUrl: "https://arxiv.org",
   tags: ["Bio-Signal Processing", "Compositor Architecture", "Clinical Data Visualization", "Sensory Interface Design"]
 };
 
 export const personalProjects: PersonalProjectItem[] = [
   {
-    title: "Bioreactor Controller Panel",
-    description: "A clean, highly performant monitoring portal tracking bioreactor environmental factors (temperature, pH, DO). Powered by glassmorphic interfaces and hardware-accelerated grid layouts to maintain consistent 120Hz render updates.",
-    githubUrl: "https://github.com",
-    tags: ["Astro", "React", "GSAP", "Chart.js"],
-    placeholderType: "telemetry"
+    title: "PyFDA Web",
+    description: "An Open Source Web application for digital signal processing and digital filter design.",
+    githubUrl: "https://github.com/borish127/PyFDA-Web",
+    tags: ["Python", "Streamlit", "Plotly"],
+    placeholderType: "DSP"
   },
   {
-    title: "3D Protein Structural Browser",
-    description: "A browser-based interactive command interface and 3D canvas viewer for rendering molecular PDB structures, featuring offloaded GPU computations and ambient molecular shaders.",
-    githubUrl: "https://github.com",
-    tags: ["Three.js", "WebGL", "TypeScript", "Biophysical APIs"],
-    placeholderType: "structure"
+    title: "PDFNote Web",
+    description: "An Open Source Web application for taking MarkDown notes of PDF files.",
+    githubUrl: "https://github.com/borish127/PDFNote_web",
+    tags: ["Javascript", "HTML", "CSS"],
+    placeholderType: "study"
   },
   {
-    title: "Vapor Diagnostic Interface",
-    description: "A mobile-first gesture prototype simulating diagnostic biosensor telemetry. Developed specifically to evaluate swipe controls and inertia scroll mapping on clinical touch tablets.",
-    githubUrl: "https://github.com",
-    tags: ["React", "Framer Motion", "Touch Events API"],
-    placeholderType: "signal"
+    title: "QR Code Generator",
+    description: "An Open Source Web application for generating QR Codes without needing account registration or design limits.",
+    githubUrl: "https://github.com/borish127/qrcode-generator",
+    tags: ["Javascript", "HTML", "CSS", "QR Code"],
+    placeholderType: "generator"
   }
 ];

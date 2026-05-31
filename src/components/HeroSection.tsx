@@ -114,9 +114,9 @@ export default function HeroSection() {
       className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden"
     >
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10">
-        
+
         {/* Left Column - Image Card (3D Tilt Frame) */}
-        <div 
+        <div
           className="lg:col-span-5 flex justify-center items-center"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
@@ -127,20 +127,17 @@ export default function HeroSection() {
             className="gpu-accelerated glass-card w-72 h-96 md:w-80 md:h-[450px] rounded-2xl p-4 flex flex-col items-center justify-between border border-slate-200/50 shadow-lg relative overflow-hidden select-none"
             style={{ transformStyle: "preserve-3d" }}
           >
-            {/* Glossy radial overlay */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 via-transparent to-blue-500/5 pointer-events-none" />
 
             {/* Glowing avatar image */}
             <div className="w-full h-full rounded-xl bg-slate-100 border border-slate-200/30 flex flex-col items-center justify-center relative overflow-hidden group">
-              <img 
-                src="/avatar.png" 
-                alt={heroData.name} 
-                className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-95 group-hover:scale-105 transition-all duration-700 ease-out" 
+              <img
+                src="../public/avatar.png"
+                alt={heroData.name}
+                className="absolute inset-0 w-full h-full object-cover scale-130 -translate-y-15 group-hover:scale-140 transition-all duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none" />
-              
+
               <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center z-10 bg-white/70 px-3 py-1.5 rounded-lg backdrop-blur-md border border-slate-200/50">
-                <span className="text-[9px] tracking-wider text-slate-700 font-sans-data uppercase">Instrument Calibration</span>
+                <span className="text-[9px] tracking-wider text-slate-700 font-sans-data uppercase">Biomedical Engineering</span>
                 <span className="text-[9px] tracking-wider text-emerald-700 font-sans-data animate-pulse">● ACTIVE</span>
               </div>
             </div>
@@ -150,20 +147,13 @@ export default function HeroSection() {
         {/* Right Column - Info Content */}
         <div className="lg:col-span-7 flex flex-col justify-center text-left">
           <div className="space-y-6">
-            
-            {/* Tag / Pre-title */}
-            <div className="hero-fade inline-block">
-              <span className="px-3 py-1 text-xs font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-500/5 rounded-full border border-emerald-500/10">
-                Portfolio 2026
-              </span>
-            </div>
 
             {/* Name & Role */}
             <div className="space-y-2">
               <h1 className="hero-fade font-display text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900">
                 {heroData.name}
               </h1>
-              <h2 className="hero-fade font-display text-2xl md:text-3xl font-medium bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-700 bg-clip-text text-transparent">
+              <h2 className="hero-fade font-display text-2xl md:text-3xl font-medium bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-700 bg-clip-text text-transparent pb-2">
                 {heroData.role}
               </h2>
             </div>
@@ -185,11 +175,10 @@ export default function HeroSection() {
               <button
                 ref={copyBtnRef}
                 onClick={copyEmail}
-                className={`gpu-accelerated cursor-pointer px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all duration-300 border flex items-center gap-2 ${
-                  copied
-                    ? "bg-emerald-50 text-emerald-700 border-emerald-500/20 shadow-sm"
-                    : "bg-transparent text-slate-600 hover:text-slate-900 border-slate-200 hover:border-emerald-500/30 hover:bg-emerald-50/20"
-                }`}
+                className={`gpu-accelerated cursor-pointer px-4 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase transition-all duration-300 border flex items-center gap-2 ${copied
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-500/20 shadow-sm"
+                  : "bg-transparent text-slate-600 hover:text-slate-900 border-slate-200 hover:border-emerald-500/30 hover:bg-emerald-50/20"
+                  }`}
               >
                 {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? "Copied!" : "Copy"}</span>
