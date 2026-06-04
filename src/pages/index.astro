@@ -7,6 +7,7 @@ import InternshipShowcase from "../components/InternshipShowcase.tsx";
 import CurrentWork from "../components/CurrentWork.tsx";
 import UniversityProject from "../components/UniversityProject.tsx";
 import PersonalProjects from "../components/PersonalProjects.tsx";
+import SkillsSection from "../components/SkillsSection.tsx";
 import BackToTop from "../components/BackToTop.tsx";
 
 // Metadata definitions
@@ -22,7 +23,6 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-    <link rel="icon" href={`${base}favicon.ico`} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
@@ -83,6 +83,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 
       <UniversityProject client:load />
       <PersonalProjects client:load />
+      <SkillsSection client:load />
     </main>
 
     {/* Global back to top utility */}

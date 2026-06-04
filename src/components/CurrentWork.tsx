@@ -88,48 +88,61 @@ export default function CurrentWork() {
 
         {/* Right Column: Visual Dashboard/Workspace Simulation */}
         <div className="lg:col-span-5 flex justify-center">
-          <div className="work-fade gpu-accelerated glass-card w-full max-w-sm rounded-2xl p-5 border border-slate-200/50 accent-border-blue-hover relative overflow-hidden select-none transition-colors duration-300">
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-blue-500/40" />
-            
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-blue-600" />
-                <span className="text-[9px] font-sans-data text-slate-500 uppercase tracking-widest">bioreactor_telemetry</span>
+          <div className="work-fade gpu-accelerated glass-card w-full max-w-md h-[280px] md:h-[350px] rounded-2xl p-4 border border-slate-200/50 accent-border-green-hover relative overflow-hidden group select-none flex items-center justify-center cursor-default transition-colors duration-300">
+            {currentWorkData.image ? (
+              <div className="w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out flex items-center justify-center overflow-hidden rounded-xl bg-slate-50 border border-slate-200/40 shadow-sm">
+                <img 
+                  src={currentWorkData.image} 
+                  alt={`${currentWorkData.company} laboratory workspace`} 
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
               </div>
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
-            </div>
-
-            {/* Simulated Live Interface Metrics */}
-            <div className="space-y-4 font-sans-data text-[10px]">
-              <div className="space-y-1">
-                <div className="flex justify-between text-[9px] text-slate-500 uppercase tracking-wider">
-                  <span>Dissolved Oxygen (DO)</span>
-                  <span className="text-emerald-600 font-bold">94% (Stable)</span>
+            ) : (
+              <div className="w-full h-full p-5 flex flex-col justify-between">
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-blue-500/40" />
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Terminal className="w-4 h-4 text-blue-600" />
+                    <span className="text-[9px] font-sans-data text-slate-500 uppercase tracking-widest">bioreactor_telemetry</span>
+                  </div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
                 </div>
-                <div className="w-full h-1 rounded-full bg-slate-200/60 overflow-hidden">
-                  <div className="h-full bg-emerald-600 rounded-full" style={{ width: "94%" }} />
+
+                {/* Simulated Live Interface Metrics */}
+                <div className="space-y-4 font-sans-data text-[10px]">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-[9px] text-slate-500 uppercase tracking-wider">
+                      <span>Dissolved Oxygen (DO)</span>
+                      <span className="text-emerald-600 font-bold">94% (Stable)</span>
+                    </div>
+                    <div className="w-full h-1 rounded-full bg-slate-200/60 overflow-hidden">
+                      <div className="h-full bg-emerald-600 rounded-full" style={{ width: "94%" }} />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-[9px] text-slate-500 uppercase tracking-wider">
+                      <span>pH Level</span>
+                      <span className="text-blue-600 font-bold">7.41 pH</span>
+                    </div>
+                    <div className="w-full h-1.5 rounded-full bg-slate-200/60 overflow-hidden">
+                      <div className="h-full bg-blue-600 rounded-full" style={{ width: "74%" }} />
+                    </div>
+                  </div>
+
+                  {/* Pseudo telemetry logs */}
+                  <div className="p-3 rounded-lg bg-slate-50 border border-slate-200/80 text-[9px] text-slate-600 space-y-1">
+                    <p className="text-blue-600">&gt; start_bioreactor_sensor_poll</p>
+                    <p className="text-slate-400">Establishing telemetry feed: ws://instrument.local</p>
+                    <p className="text-emerald-600 font-medium">DO feedback loop active | Calibration: 100%</p>
+                    <p className="text-slate-400">Stream: 100Hz | Temp: 37.0°C | Vol: 2.5L</p>
+                  </div>
                 </div>
               </div>
-
-              <div className="space-y-1">
-                <div className="flex justify-between text-[9px] text-slate-500 uppercase tracking-wider">
-                  <span>pH Level</span>
-                  <span className="text-blue-600 font-bold">7.41 pH</span>
-                </div>
-                <div className="w-full h-1.5 rounded-full bg-slate-200/60 overflow-hidden">
-                  <div className="h-full bg-blue-600 rounded-full" style={{ width: "74%" }} />
-                </div>
-              </div>
-
-              {/* Pseudo telemetry logs */}
-              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200/80 text-[9px] text-slate-600 space-y-1">
-                <p className="text-blue-600">&gt; start_bioreactor_sensor_poll</p>
-                <p className="text-slate-400">Establishing telemetry feed: ws://instrument.local</p>
-                <p className="text-emerald-600 font-medium">DO feedback loop active | Calibration: 100%</p>
-                <p className="text-slate-400">Stream: 100Hz | Temp: 37.0°C | Vol: 2.5L</p>
-              </div>
-            </div>
-
+            )}
           </div>
         </div>
 

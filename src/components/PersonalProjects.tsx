@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Github, Folder, Layout, Terminal as TermIcon, Smartphone } from "lucide-react";
+import { Github, Folder, Layout, Terminal as TermIcon, Smartphone, ExternalLink } from "lucide-react";
 import { personalProjects } from "../config/portfolio";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -215,7 +215,7 @@ export default function PersonalProjects() {
             Research Implementations
           </span>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-            Instrumentation Projects
+            Personal Projects
           </h2>
           <div className="w-12 h-[1px] bg-emerald-500/40 mx-auto" />
         </div>
@@ -239,11 +239,22 @@ export default function PersonalProjects() {
                 >
                   <div
                     ref={(el) => { imageRefs.current[idx] = el; }}
-                    className="gpu-accelerated glass-card w-full max-w-md h-[280px] md:h-[350px] rounded-2xl p-5 border border-slate-200/50 accent-border-green-hover relative overflow-hidden group select-none flex items-center justify-center cursor-default transition-colors duration-300"
+                    className="gpu-accelerated glass-card w-full max-w-md rounded-2xl p-5 border border-slate-200/50 accent-border-green-hover relative overflow-hidden group select-none transition-colors duration-300 cursor-default flex items-center justify-center"
                   >
                     {/* Inner image scale zoom trigger */}
-                    <div className="w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                      {renderProjectGraphic(project.placeholderType)}
+                    <div className="w-full h-auto min-h-[200px] transform group-hover:scale-105 transition-transform duration-700 ease-out flex items-center justify-center">
+                      {project.image ? (
+                        <img 
+                          src={project.image} 
+                          alt={project.title} 
+                          className="w-full h-auto object-contain rounded-xl border border-slate-200/20 shadow-sm"
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                        />
+                      ) : (
+                        renderProjectGraphic(project.placeholderType || "")
+                      )}
                     </div>
                   </div>
                 </div>
@@ -279,8 +290,8 @@ export default function PersonalProjects() {
                     ))}
                   </div>
 
-                  {/* Magnetic GitHub Pill Button */}
-                  <div className="pt-2 flex">
+                  {/* Magnetic GitHub & Live Web Pill Buttons */}
+                  <div className="pt-2 flex flex-wrap gap-3">
                     <a
                       ref={(el) => { magneticRefs.current[idx] = el; }}
                       href={project.githubUrl}
@@ -291,6 +302,18 @@ export default function PersonalProjects() {
                       <Github className="w-4 h-4" />
                       <span>View Repository</span>
                     </a>
+                    
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="gpu-accelerated inline-flex cursor-pointer items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-600 border border-emerald-650 text-white hover:bg-emerald-700 text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 shadow-sm"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Visit Web</span>
+                      </a>
+                    )}
                   </div>
 
                 </div>

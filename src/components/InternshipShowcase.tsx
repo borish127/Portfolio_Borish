@@ -1,180 +1,160 @@
-import React, { useEffect, useRef } from "react";
-import { Check } from "lucide-react";
+import React, { useEffect, useState, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { internshipStages } from "../config/portfolio";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function InternshipShowcase() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
+  const nextStage = () => {
+    if (currentIdx < internshipStages.length - 1) {
+      setCurrentIdx((prev) => prev + 1);
+    }
+  };
+
+  const prevStage = () => {
+    if (currentIdx > 0) {
+      setCurrentIdx((prev) => prev - 1);
+    }
+  };
+
+  // Keyboard navigation inside viewport
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const rect = sectionRef.current?.getBoundingClientRect();
+      if (!rect) return;
 
-    const container = containerRef.current;
-    if (!container) return;
+      // Only navigate if the section is visible in the viewport
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!isVisible) return;
 
-    // Create the GSAP timeline linked to scroll
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: "top top",
-        end: "+=1200", // Length of pinning scroll (tighter/faster)
-        pin: true,
-        scrub: 0.5, // More responsive scroll tracking
-        anticipatePin: 1,
-        snap: {
-          snapTo: [0, 0.33, 0.67, 1.0],
-          duration: { min: 0.3, max: 0.7 }, // Coasting duration
-          delay: 0.0, // Instantly transitions to snap
-          ease: "power2.out" // Deceleration ease mimicking friction/inertia
-        }
+      if (e.key === "ArrowLeft") {
+        prevStage();
+      } else if (e.key === "ArrowRight") {
+        nextStage();
       }
-    });
-
-    // Stage 1 -> Stage 2 transition
-    tl.to(".stage-1-item", {
-      opacity: 0,
-      y: -80,
-      pointerEvents: "none",
-      duration: 1,
-      ease: "power2.inOut"
-    })
-    .to(container, {
-      backgroundColor: "#f0fdf4", // Soft emerald tint
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .to(".showcase-blob-green", {
-      opacity: 1,
-      scale: 1.3,
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .fromTo(".stage-2-item", 
-      { opacity: 0, y: 80, pointerEvents: "none" },
-      { opacity: 1, y: 0, pointerEvents: "auto", duration: 1, ease: "power2.inOut" },
-      "-=0.7" // overlap slightly
-    )
-    
-    // Stage 2 -> Stage 3 transition
-    .to(".stage-2-item", {
-      opacity: 0,
-      y: -80,
-      pointerEvents: "none",
-      duration: 1,
-      ease: "power2.inOut"
-    })
-    .to(container, {
-      backgroundColor: "#f0f9ff", // Soft blue tint
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .to(".showcase-blob-green", {
-      opacity: 0,
-      scale: 0.8,
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .to(".showcase-blob-blue", {
-      opacity: 1,
-      scale: 1.3,
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .fromTo(".stage-3-item", 
-      { opacity: 0, y: 80, pointerEvents: "none" },
-      { opacity: 1, y: 0, pointerEvents: "auto", duration: 1, ease: "power2.inOut" },
-      "-=0.7"
-    )
-
-    // Stage 3 -> Stage 4 transition
-    .to(".stage-3-item", {
-      opacity: 0,
-      y: -80,
-      pointerEvents: "none",
-      duration: 1,
-      ease: "power2.inOut"
-    })
-    .to(container, {
-      backgroundColor: "#fdfaf3", // Soft warm amber tint
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .to(".showcase-blob-blue", {
-      opacity: 0,
-      scale: 0.8,
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .to(".showcase-blob-orange", {
-      opacity: 1,
-      scale: 1.3,
-      duration: 1,
-      ease: "power2.inOut"
-    }, "-=1")
-    .fromTo(".stage-4-item", 
-      { opacity: 0, y: 80, pointerEvents: "none" },
-      { opacity: 1, y: 0, pointerEvents: "auto", duration: 1, ease: "power2.inOut" },
-      "-=0.7"
-    );
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === container) trigger.kill();
-      });
     };
-  }, []);
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [currentIdx]);
+
+  // Mobile swipe navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diffX = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50; // minimum swipe distance in pixels
+    if (diffX > minSwipeDistance) {
+      nextStage();
+    } else if (diffX < -minSwipeDistance) {
+      prevStage();
+    }
+  };
+
+  const bgColors = [
+    "bg-canvas-light",
+    "bg-[#f0fdf4]/50",
+    "bg-[#f0f9ff]/50",
+    "bg-[#fdfaf3]/50",
+  ];
 
   return (
     <section
-      ref={containerRef}
+      ref={sectionRef}
       id="experience"
-      className="relative h-screen w-full flex items-center justify-center bg-canvas-light overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className={`relative h-[880px] sm:h-[880px] md:h-[920px] lg:h-[700px] w-full flex flex-col items-center justify-start lg:justify-center pt-12 sm:pt-16 lg:pt-0 gap-2 lg:gap-6 transition-colors duration-700 ease-in-out ${bgColors[currentIdx]} overflow-hidden`}
     >
-      {/* Local Section background blobs for pinning cues */}
+      {/* Local Section background blobs for visual depth */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="showcase-blob-green absolute top-1/2 left-1/4 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[500px] rounded-full bg-emerald-500/10 blur-[100px] opacity-0 transition-opacity duration-300" />
-        <div className="showcase-blob-blue absolute top-1/2 right-1/4 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[500px] rounded-full bg-blue-500/8 blur-[100px] opacity-0 transition-opacity duration-300" />
-        <div className="showcase-blob-orange absolute top-1/2 left-1/3 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[500px] rounded-full bg-amber-500/8 blur-[100px] opacity-0 transition-opacity duration-300" />
+        <div
+          className={`absolute top-1/2 left-1/4 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[500px] rounded-full bg-emerald-500/10 blur-[100px] transition-all duration-700 ${currentIdx === 0 ? "opacity-100 scale-125" : "opacity-0 scale-90"
+            }`}
+        />
+        <div
+          className={`absolute top-1/2 right-1/4 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[500px] rounded-full bg-blue-500/8 blur-[100px] transition-all duration-700 ${currentIdx === 1 ? "opacity-100 scale-125" : "opacity-0 scale-90"
+            }`}
+        />
+        <div
+          className={`absolute top-1/2 left-1/3 -translate-y-1/2 w-[35vw] h-[35vw] max-w-[500px] rounded-full bg-amber-500/8 blur-[100px] transition-all duration-700 ${currentIdx === 2 ? "opacity-100 scale-125" : "opacity-0 scale-90"
+            }`}
+        />
       </div>
 
-      <div className="w-full max-w-6xl h-[80vh] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-6 relative z-10">
+      {/* Section Title - Static & Fixed Position */}
+      <div className="text-center space-y-2 z-10 select-none pt-4 lg:pt-0">
+        <span className="text-[10px] font-sans-data font-bold uppercase tracking-widest text-emerald-600">
+          Professional Experience
+        </span>
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+          Student Internship
+        </h2>
+        <div className="w-12 h-[1px] bg-emerald-500/40 mx-auto" />
+      </div>
+
+      <div className="w-full max-w-6xl h-auto lg:h-[80vh] grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-12 items-center px-16 sm:px-20 lg:px-6 py-4 lg:py-0 relative z-10">
 
         {/* Left Column - Graphic/Illustration Side */}
-        <div className="lg:col-span-5 relative w-full h-[300px] md:h-[400px]">
+        <div className="lg:col-span-5 relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[400px] order-2 lg:order-1">
           {internshipStages.map((stage, idx) => {
+            const isActive = idx === currentIdx;
             const stageNum = idx + 1;
-            const isFirst = idx === 0;
             return (
-              <div 
+              <div
                 key={idx}
-                className={`stage-${stageNum}-item absolute inset-0 w-full h-full ${
-                  isFirst ? "" : "opacity-0 pointer-events-none"
-                }`}
+                className={`absolute inset-0 w-full h-full transition-all duration-500 ease-in-out ${isActive
+                  ? "opacity-100 translate-x-0 pointer-events-auto z-10"
+                  : "opacity-0 pointer-events-none z-0"
+                  }`}
+                style={{
+                  transform: isActive
+                    ? "translateX(0)"
+                    : idx < currentIdx
+                      ? "translateX(-60px)"
+                      : "translateX(60px)"
+                }}
               >
-                <div className="w-full h-full p-4 glass-card rounded-2xl border border-slate-200/50 flex items-center justify-center relative shadow-sm">
-                  {/* Render 2 images inside this stage frame (columns or rows layout depending on config) */}
-                  <div className={`w-full h-full grid gap-3 relative select-none ${
-                    stage.imageLayout === "rows" ? "grid-rows-2" : "grid-cols-2"
-                  }`}>
-                    {stage.images && stage.images.map((imgSrc, imgIdx) => (
-                      <div key={imgIdx} className="w-full h-full rounded-xl bg-slate-50 border border-slate-200/40 relative overflow-hidden group/img shadow-sm flex items-center justify-center">
-                        <img 
-                          src={imgSrc} 
-                          alt={`${stage.title} visual ${imgIdx + 1}`} 
-                          className="absolute inset-0 w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500 ease-out z-10"
-                          onError={(e) => {
-                            // Hide broken image link visual
-                            e.currentTarget.style.display = "none";
-                          }}
-                        />
-                        {/* Elegant fallback placeholder visual */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-50 text-[10px] text-slate-400 font-sans-data">
-                          <span className="font-semibold uppercase tracking-widest text-[8px] text-slate-400 opacity-60">Visual {imgIdx + 1}</span>
-                          <span className="text-[7px] text-slate-400 mt-1 uppercase font-mono break-all px-2">{imgSrc.split('/').pop()}</span>
+                <div className="w-full h-full p-4 glass-card border border-slate-200/50 flex items-center justify-center relative shadow-sm">
+                  <div className={`w-full h-full grid gap-3 relative select-none ${stage.imageLayout === "rows" ? "grid-rows-2" : "grid-cols-2"
+                    }`}>
+                    {stage.images && stage.images.map((imgSrc, imgIdx) => {
+                      const isProject1SecondImg = stageNum === 1 && imgIdx === 1;
+                      return (
+                        <div
+                          key={imgIdx}
+                          className="w-full h-full rounded-xl bg-slate-50 border border-slate-200/40 relative overflow-hidden group/img shadow-sm flex items-center justify-center"
+                        >
+                          <img
+                            src={imgSrc}
+                            alt={`${stage.title} visual ${imgIdx + 1}`}
+                            className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out z-10 ${isProject1SecondImg
+                              ? "object-[center_70%] lg:object-center group-hover/img:scale-105"
+                              : "group-hover/img:scale-105"
+                              }`}
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-50 text-[10px] text-slate-400 font-sans-data">
+                            <span className="font-semibold uppercase tracking-widest text-[8px] text-slate-400 opacity-60">Visual {imgIdx + 1}</span>
+                            <span className="text-[7px] text-slate-400 mt-1 uppercase font-mono break-all px-2">{imgSrc.split('/').pop()}</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -183,22 +163,31 @@ export default function InternshipShowcase() {
         </div>
 
         {/* Right Column - Text Description Side */}
-        <div className="lg:col-span-7 relative w-full h-[350px] md:h-[400px] flex items-center">
+        <div className="lg:col-span-7 relative w-full h-[360px] sm:h-[340px] md:h-[320px] lg:h-[380px] overflow-hidden order-1 lg:order-2">
           {internshipStages.map((stage, idx) => {
+            const isActive = idx === currentIdx;
             const stageNum = idx + 1;
-            const isFirst = idx === 0;
             const isStage4 = stageNum === 4;
-            const badgeColor = 
+            const badgeColor =
               stageNum === 1 ? "text-emerald-700 bg-emerald-50 border border-emerald-500/20" :
-              stageNum === 2 ? "text-blue-700 bg-blue-50 border border-blue-500/20" :
-              stageNum === 3 ? "text-emerald-700 bg-emerald-50 border border-emerald-500/20" :
-              "text-amber-700 bg-amber-50 border border-amber-500/20";
+                stageNum === 2 ? "text-blue-700 bg-blue-50 border border-blue-500/20" :
+                  stageNum === 3 ? "text-emerald-700 bg-emerald-50 border border-emerald-500/20" :
+                    "text-amber-700 bg-amber-50 border border-amber-500/20";
+
             return (
-              <div 
+              <div
                 key={idx}
-                className={`stage-${stageNum}-item absolute inset-0 w-full h-full flex flex-col justify-center space-y-4 text-left ${
-                  isFirst ? "" : "opacity-0 pointer-events-none"
-                }`}
+                className={`absolute inset-0 w-full h-full flex flex-col justify-start space-y-4 text-left overflow-y-auto lg:overflow-y-visible pr-2 transition-all duration-500 ease-in-out ${isActive
+                  ? "opacity-100 translate-x-0 pointer-events-auto z-10"
+                  : "opacity-0 pointer-events-none z-0"
+                  }`}
+                style={{
+                  transform: isActive
+                    ? "translateX(0)"
+                    : idx < currentIdx
+                      ? "translateX(-60px)"
+                      : "translateX(60px)"
+                }}
               >
                 <span className={`text-[10px] font-sans-data font-bold tracking-widest px-3 py-1 rounded-lg w-fit ${badgeColor}`}>
                   {isStage4 ? "MISCELLANEOUS" : `PROJECT 0${stageNum}`}
@@ -213,7 +202,6 @@ export default function InternshipShowcase() {
                   {stage.narrative}
                 </p>
 
-                {/* Impact Metric Widget (if defined in config) */}
                 {stage.metricLabel && (
                   <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-500/15 w-fit flex items-center gap-4 shadow-sm">
                     <div className="text-lg md:text-xl font-bold text-emerald-700 font-sans-data">
@@ -239,12 +227,54 @@ export default function InternshipShowcase() {
 
       </div>
 
-      {/* Scroll indicator overlay */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40">
-        <span className="text-[8px] font-sans-data tracking-widest text-slate-400 uppercase">Scroll to Advance</span>
-        <div className="w-1.5 h-6 rounded-full bg-slate-200 flex justify-center p-0.5">
-          <div className="w-0.5 h-1.5 rounded-full bg-emerald-500 animate-bounce" />
-        </div>
+      {/* Floating Carousel Arrows */}
+      {currentIdx > 0 && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            prevStage();
+          }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+          }}
+          className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full glass-card border border-slate-200/50 text-slate-500 hover:text-emerald-600 hover:border-emerald-500/20 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md cursor-pointer"
+          aria-label="Previous Stage"
+        >
+          <ChevronLeft className="w-5 h-5 md:w-6 h-6" />
+        </button>
+      )}
+
+      {currentIdx < internshipStages.length - 1 && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            nextStage();
+          }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+          }}
+          className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full glass-card border border-slate-200/50 text-slate-500 hover:text-emerald-600 hover:border-emerald-500/20 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md cursor-pointer"
+          aria-label="Next Stage"
+        >
+          <ChevronRight className="w-5 h-5 md:w-6 h-6" />
+        </button>
+      )}
+
+      {/* Carousel Indicators / Dots */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+        {internshipStages.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIdx(idx)}
+            className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${idx === currentIdx
+              ? "w-8 bg-emerald-600 shadow-sm"
+              : "w-2.5 bg-slate-300 hover:bg-slate-400"
+              }`}
+            aria-label={`Go to stage ${idx + 1}`}
+          />
+        ))}
       </div>
     </section>
   );

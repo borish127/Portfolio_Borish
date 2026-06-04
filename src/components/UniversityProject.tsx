@@ -170,17 +170,19 @@ export default function UniversityProject() {
             </div>
 
             {/* CTA Document Link */}
-            <div className="pt-4 flex">
-              <a
-                href={universityProject.paperUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gpu-accelerated inline-flex cursor-pointer items-center gap-2 px-6 py-3 rounded-lg border border-blue-600/30 text-blue-600 hover:bg-blue-600/5 hover:border-blue-600/60 text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300"
-              >
-                <span>Read Research Paper</span>
-                <ExternalLink className="w-4 h-4 text-blue-600" />
-              </a>
-            </div>
+            {universityProject.paperUrl && (
+              <div className="pt-4 flex">
+                <a
+                  href={universityProject.paperUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gpu-accelerated inline-flex cursor-pointer items-center gap-2 px-6 py-3 rounded-lg border border-blue-600/30 text-blue-600 hover:bg-blue-600/5 hover:border-blue-600/60 text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300"
+                >
+                  <span>Read Research Paper</span>
+                  <ExternalLink className="w-4 h-4 text-blue-600" />
+                </a>
+              </div>
+            )}
 
           </div>
         </div>
