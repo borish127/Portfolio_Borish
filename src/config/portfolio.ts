@@ -185,6 +185,7 @@ export const currentWorkData: CurrentWorkData = {
   bullets: [
     "Executed routine maintenance and provided technical support for optical microscopes across multiple Medical School laboratories, diagnosing and fixing electronic and optical issues.",
     "Modernized optical microscope systems by retrofitting legacy bulb assemblies and transformers with efficient 5V LED illumination.",
+    "Assisted in the evaluation and selection of new microscope acquisitions for the Medical School, managing the assembly, setup, and quality testing of each unit upon arrival.",
     "Streamlined inventory management protocols for lab equipment, ensuring supply availability (Development in progress: A new inventory system for the faculty)."
   ],
   placeholderType: "Maintenance",
@@ -202,7 +203,7 @@ export const universityProject: UniversityProjectData = {
 export const personalProjects: PersonalProjectItem[] = [
   {
     title: "PyFDA-Web (Digital Signal Processing Tool)",
-    description: "Developed a client-side web application for DSP filter design, utilizing WebAssembly and Pyodide to run Python code (scipy/numpy) directly in the browser. Features include IIR/FIR filter design, frequency response analysis, and pole-zero plots using Material Design 3 and Plotly.js.",
+    description: "PyFDA Web: A web app for IIR/FIR filter design, pole/zero analysis, and fixed-point simulation, powered locally by Python in your browser.",
     githubUrl: "https://github.com/borish127/PyFDA-Web",
     tags: ["Python", "WebAssembly", "Pyodide", "Scipy", "Numpy", "Material Design 3", "Plotly.js"],
     image: `${base}pyfda-web.webp`,
@@ -210,15 +211,15 @@ export const personalProjects: PersonalProjectItem[] = [
   },
   {
     title: "PDFNote_web",
-    description: "A functional web tool built from scratch, focusing on utility and efficient user interface design.",
+    description: "A simple web app to read PDFs and take notes associated with each page. Notes are taken in Markdown, with full support for uploading local images and creating dynamic Mermaid diagrams.",
     githubUrl: "https://github.com/borish127/PDFNote_web",
-    tags: ["JavaScript", "HTML", "CSS"],
+    tags: ["JavaScript", "HTML5", "CSS3", "PDF.js", "Markdown", "Mermaid.js", "Local Storage"],
     image: `${base}pdfnote-web.webp`,
     liveUrl: "https://borish127.github.io/PDFNote_web/"
   },
   {
     title: "QR Code Generator",
-    description: "A functional web tool built from scratch, focusing on utility and efficient user interface design.",
+    description: "A clean, client-side web application to generate custom QR codes. Supports custom styling, color configurations, dot patterns, and instant high-resolution downloads.",
     githubUrl: "https://github.com/borish127/qrcode-generator",
     tags: ["JavaScript", "HTML", "CSS", "QR Code"],
     image: `${base}qrcode-generator.webp`,
@@ -258,14 +259,14 @@ export const skillsData: SkillsData = {
       iconName: "zap"
     },
     {
-      title: "Music",
-      description: "Accomplished clarinetist, guitarist, and singer. Focused on musical arrangement, conducting, digital audio recording, and video production.",
-      iconName: "music"
-    },
-    {
       title: "Tech & Web",
       description: "Linux daily driver and open-source enthusiast. Experienced in system optimization, experimenting with open-source environments, and building web tools from scratch.",
       iconName: "terminal"
+    },
+    {
+      title: "Music",
+      description: "Accomplished clarinetist, guitarist, and singer. Focused on musical arrangement, conducting, digital audio recording, and video production.",
+      iconName: "music"
     }
   ]
 };

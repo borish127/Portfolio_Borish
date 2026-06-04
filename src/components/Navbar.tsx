@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { User, GraduationCap, Briefcase, FileText, FolderGit2, Wrench } from "lucide-react";
 import { gsap } from "gsap";
 
@@ -10,6 +10,17 @@ interface NavItem {
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("hero");
+  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clean up timers on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const navItems: NavItem[] = [
     { id: "hero", label: "Presentation", icon: <User className="w-3.5 h-3.5 md:w-4 md:h-4" /> },
@@ -22,6 +33,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isScrollingRef.current) return;
       const scrollPosition = window.scrollY + window.innerHeight / 3;
       
       // Check if user is at the very bottom of the page
@@ -61,17 +73,43 @@ export default function Navbar() {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      const yOffset = element.getBoundingClientRect().top + window.scrollY;
-      const scrollObj = { y: window.scrollY };
-      
-      gsap.to(scrollObj, {
-        y: yOffset,
-        duration: 0.85,
-        ease: "power2.inOut",
-        onUpdate: () => {
-          window.scrollTo(0, scrollObj.y);
+      // Clear any pending scroll end timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      // Lock scroll listener and trigger active highlight instantly
+      isScrollingRef.current = true;
+      setActiveSection(id);
+
+      const targetScrollY = element.getBoundingClientRect().top + window.scrollY;
+      let yOffset = targetScrollY;
+
+      if (id === "hero") {
+        yOffset = 0;
+      } else if (id === "experience") {
+        const extraSpace = window.innerHeight - element.offsetHeight;
+        if (extraSpace > 0) {
+          // Vertically center the internship section in the viewport
+          yOffset = targetScrollY - extraSpace / 2;
+        } else {
+          // Standard top scroll if section is taller than the viewport
+          yOffset = targetScrollY;
         }
+      } else {
+        // Other sections align to the top as originally designed
+        yOffset = targetScrollY;
+      }
+
+      window.scrollTo({
+        top: yOffset,
+        behavior: "smooth"
       });
+
+      // Release scroll listener lock after smooth scroll animation completes (approx 800ms)
+      scrollTimeoutRef.current = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 800);
     }
   };
 

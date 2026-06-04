@@ -11,10 +11,40 @@ export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const copyBtnRef = useRef<HTMLButtonElement>(null);
 
+  // Unified copy helper with fallback for non-secure HTTP (local IP testing)
+  const copyToClipboard = async (text: string) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      // Fallback method
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.width = "2em";
+      textArea.style.height = "2em";
+      textArea.style.padding = "0";
+      textArea.style.border = "none";
+      textArea.style.outline = "none";
+      textArea.style.boxShadow = "none";
+      textArea.style.background = "transparent";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        console.error("Fallback copy failed: ", err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
+
   // Email copy function
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText(heroData.email);
+      await copyToClipboard(heroData.email);
       setCopied(true);
 
       // Opacity cross-fade on copy button
@@ -38,7 +68,7 @@ export default function HeroSection() {
   const copyPhone = async () => {
     try {
       if (heroData.phone) {
-        await navigator.clipboard.writeText(heroData.phone);
+        await copyToClipboard(heroData.phone);
         setPhoneCopied(true);
         setTimeout(() => {
           setPhoneCopied(false);
@@ -218,7 +248,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Social Grid (WhatsApp, Gmail, Instagram, YouTube) - Desktop Only */}
+          {/* Social Grid (WhatsApp, Instagram, YouTube) - Desktop Only */}
           <div className="hero-fade hidden lg:flex items-center justify-center gap-4">
             {Object.entries({
               whatsapp: { 
@@ -230,15 +260,14 @@ export default function HeroSection() {
                 ),
                 label: "WhatsApp" 
               },
-              gmail: { href: heroData.socials.gmail, icon: <Mail className="w-4 h-4" />, label: "Email" },
               instagram: { href: heroData.socials.instagram, icon: <Instagram className="w-4 h-4" />, label: "Instagram" },
               youtube: { href: heroData.socials.youtube, icon: <Youtube className="w-4 h-4" />, label: "YouTube" }
             }).map(([key, data]) => (
               <a
                 key={key}
                 href={data.href}
-                target={key !== "gmail" ? "_blank" : undefined}
-                rel={key !== "gmail" ? "noopener noreferrer" : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-3 rounded-xl glass-pill text-slate-500 hover:text-emerald-600 border border-slate-200 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all duration-300"
                 aria-label={data.label}
               >
@@ -378,7 +407,7 @@ export default function HeroSection() {
               )}
             </div>
 
-            {/* Social Grid (WhatsApp, Gmail, Instagram, YouTube) - Mobile Only */}
+            {/* Social Grid (WhatsApp, Instagram, YouTube) - Mobile Only */}
             <div className="hero-fade flex lg:hidden items-center justify-center gap-4 pt-4">
               {Object.entries({
                 whatsapp: { 
@@ -390,15 +419,14 @@ export default function HeroSection() {
                   ),
                   label: "WhatsApp" 
                 },
-                gmail: { href: heroData.socials.gmail, icon: <Mail className="w-4 h-4" />, label: "Email" },
                 instagram: { href: heroData.socials.instagram, icon: <Instagram className="w-4 h-4" />, label: "Instagram" },
                 youtube: { href: heroData.socials.youtube, icon: <Youtube className="w-4 h-4" />, label: "YouTube" }
               }).map(([key, data]) => (
                 <a
                   key={key}
                   href={data.href}
-                  target={key !== "gmail" ? "_blank" : undefined}
-                  rel={key !== "gmail" ? "noopener noreferrer" : undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-3 rounded-xl glass-pill text-slate-500 hover:text-emerald-600 border border-slate-200 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all duration-300"
                   aria-label={data.label}
                 >

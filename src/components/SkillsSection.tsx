@@ -16,22 +16,24 @@ export default function SkillsSection() {
 
     const ctx = gsap.context(() => {
       // 1. Staggered card fade-in & slide up
-      gsap.fromTo(
-        cards,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none"
+      // 1. Independent card fade-in & slide up when each enters the viewport
+      cards.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play reset play reset"
+            }
           }
-        }
-      );
+        );
+      });
 
       // 2. Sequential back-out stagger for individual technical skill tag pills
       gsap.fromTo(
@@ -47,7 +49,7 @@ export default function SkillsSection() {
           scrollTrigger: {
             trigger: ".skills-tech-card",
             start: "top 85%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
@@ -65,7 +67,7 @@ export default function SkillsSection() {
           scrollTrigger: {
             trigger: ".skills-lang-card",
             start: "top 85%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
@@ -166,18 +168,20 @@ export default function SkillsSection() {
               <div
                 key={idx}
                 ref={(el) => { cardRefs.current[idx + 2] = el; }}
-                className="gpu-accelerated glass-card p-6 border border-slate-200/50 flex flex-col md:flex-row gap-4 items-start text-left group hover:-translate-y-1 hover:shadow-md hover:border-emerald-500/30 hover:bg-white/60 transition-all duration-300 shadow-sm"
+                className="gpu-accelerated w-full"
               >
-                <div className="p-3 bg-white border border-slate-200/40 rounded-xl shadow-inner shrink-0 transform group-hover:scale-110 transition-transform duration-300">
-                  {renderInterestIcon(interest.iconName)}
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-base font-bold text-slate-900 font-sans-data">
-                    {interest.title}
-                  </h3>
-                  <p className="text-slate-600 text-xs md:text-sm font-light leading-relaxed">
-                    {interest.description}
-                  </p>
+                <div className="glass-card p-6 border border-slate-200/50 flex flex-col md:flex-row gap-4 items-start text-left group hover:-translate-y-1 hover:shadow-md hover:border-emerald-500/30 hover:bg-white/60 transition-all duration-300 shadow-sm w-full">
+                  <div className="p-3 bg-white border border-slate-200/40 rounded-xl shadow-inner shrink-0 transform group-hover:scale-110 transition-transform duration-300">
+                    {renderInterestIcon(interest.iconName)}
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-base font-bold text-slate-900 font-sans-data">
+                      {interest.title}
+                    </h3>
+                    <p className="text-slate-600 text-xs md:text-sm font-light leading-relaxed">
+                      {interest.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
