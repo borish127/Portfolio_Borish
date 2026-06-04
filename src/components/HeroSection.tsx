@@ -162,6 +162,62 @@ export default function HeroSection() {
             </div>
           </div>
 
+          {/* Contact Details (Address, Phone, Email) - Desktop Only */}
+          <div className="hero-fade hidden lg:flex flex-col items-center gap-3.5 w-full max-w-[280px] md:max-w-[320px]">
+            {/* Address */}
+            {heroData.address && (
+              <div className="flex items-center gap-1.5 text-xs text-slate-500 font-sans-data text-center">
+                <MapPin className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                <span className="text-slate-700">{heroData.address}</span>
+              </div>
+            )}
+
+            {/* Email & Phone Copying Widgets */}
+            <div className="flex flex-col items-stretch gap-2.5 w-full">
+              {/* Email Copy Widget */}
+              <div className="flex items-center gap-1.5 w-full">
+                <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100/50 border border-slate-200/50 shadow-inner backdrop-blur-md flex-1 overflow-hidden">
+                  <Mail className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <span className="text-slate-800 text-[13px] font-sans-data select-all whitespace-nowrap overflow-hidden text-ellipsis">
+                    {heroData.email}
+                  </span>
+                </div>
+                <button
+                  onClick={copyEmail}
+                  className={`gpu-accelerated cursor-pointer px-3 py-2 rounded-xl text-[10px] font-semibold tracking-wider uppercase transition-all duration-300 border flex items-center justify-center gap-1.5 flex-shrink-0 ${copied
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-500/20"
+                    : "bg-transparent text-slate-600 border-slate-200 hover:border-emerald-500/30 hover:bg-emerald-50/20"
+                    }`}
+                >
+                  {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? "Copied" : "Copy"}</span>
+                </button>
+              </div>
+
+              {/* Phone Copy Widget */}
+              {heroData.phone && (
+                <div className="flex items-center gap-1.5 w-full">
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100/50 border border-slate-200/50 shadow-inner backdrop-blur-md flex-1">
+                    <Phone className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                    <span className="text-slate-800 text-[13px] font-sans-data select-all whitespace-nowrap">
+                      {heroData.phone}
+                    </span>
+                  </div>
+                  <button
+                    onClick={copyPhone}
+                    className={`gpu-accelerated cursor-pointer px-3 py-2 rounded-xl text-[10px] font-semibold tracking-wider uppercase transition-all duration-300 border flex items-center justify-center gap-1.5 flex-shrink-0 ${phoneCopied
+                      ? "bg-emerald-50 text-emerald-700 border-emerald-500/20"
+                      : "bg-transparent text-slate-600 border-slate-200 hover:border-emerald-500/30 hover:bg-emerald-50/20"
+                      }`}
+                  >
+                    {phoneCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{phoneCopied ? "Copied" : "Copy"}</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Social Grid (WhatsApp, Gmail, Instagram, YouTube) - Desktop Only */}
           <div className="hero-fade hidden lg:flex items-center justify-center gap-4">
             {Object.entries({
@@ -239,21 +295,48 @@ export default function HeroSection() {
               })}
             </div>
 
-            {/* Contact Info (Address) */}
+            {/* Personal Attributes */}
+            {heroData.personalAttributes && (
+              <div className="hero-fade space-y-2.5 pt-3 border-t border-slate-200/40">
+                <h3 className="text-[10px] font-sans-data font-bold uppercase tracking-widest text-slate-500">
+                  Personal Attributes
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                  <ul className="space-y-2">
+                    {heroData.personalAttributes.filter((_, idx) => idx % 2 === 0).map((attr, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-slate-600 text-[13px] md:text-sm font-light leading-snug">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+                        <span>{attr}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className="space-y-2">
+                    {heroData.personalAttributes.filter((_, idx) => idx % 2 !== 0).map((attr, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-slate-600 text-[13px] md:text-sm font-light leading-snug">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+                        <span>{attr}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {/* Contact Info (Address) - Mobile Only */}
             {heroData.address && (
-              <div className="hero-fade flex items-center gap-1.5 text-xs md:text-sm text-slate-500 font-sans-data">
+              <div className="hero-fade flex lg:hidden items-center gap-1.5 text-xs md:text-sm text-slate-500 font-sans-data">
                 <MapPin className="w-3.5 h-3.5 text-emerald-600" />
                 <span className="text-slate-700">{heroData.address}</span>
               </div>
             )}
 
-            {/* Email & Phone Copying Widgets (Always stacked vertically) */}
-            <div className="hero-fade flex flex-col items-start gap-3">
+            {/* Email & Phone Copying Widgets (Always stacked vertically) - Mobile Only */}
+            <div className="hero-fade flex lg:hidden flex-col items-start gap-3">
               {/* Email Copy Widget */}
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100/50 border border-slate-200/50 shadow-inner backdrop-blur-md flex-1 sm:flex-initial">
                   <Mail className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span className="text-slate-800 text-sm font-sans-data select-all whitespace-nowrap">
+                  <span className="text-slate-800 text-[13px] font-sans-data select-all whitespace-nowrap">
                     {heroData.email}
                   </span>
                 </div>
@@ -276,7 +359,7 @@ export default function HeroSection() {
                 <div className="flex items-center gap-2 w-full sm:w-auto">
                   <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100/50 border border-slate-200/50 shadow-inner backdrop-blur-md flex-1 sm:flex-initial">
                     <Phone className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    <span className="text-slate-800 text-sm font-sans-data select-all whitespace-nowrap">
+                    <span className="text-slate-800 text-[13px] font-sans-data select-all whitespace-nowrap">
                       {heroData.phone}
                     </span>
                   </div>

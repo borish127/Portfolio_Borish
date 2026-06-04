@@ -18,6 +18,7 @@ export interface HeroData {
     icon: string;
     content: string;
   }[];
+  personalAttributes: string[];
 }
 
 export interface EducationItem {
@@ -101,7 +102,17 @@ Professional Summary: Advanced bioengineering student with a creative mindset an
     gmail: "borishage7@gmail.com",
     instagram: "https://www.instagram.com/borish127?igsh=eWNmbnJ0c3pvNzQ5",
     youtube: "https://youtube.com/@borish127"
-  }
+  },
+  personalAttributes: [
+    "Responsible and punctual",
+    "Optimistic and growth-oriented",
+    "Courteous and professional",
+    "Team player and communicative",
+    "Driven, proactive, and innovative",
+    "Motivated with a passion for learning new skills",
+    "High initiative; able to take action independently and lead others in collaborative efforts",
+    "Leadership skills"
+  ]
 };
 
 export const educationData: EducationItem[] = [
